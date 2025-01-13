@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 
 import { NoteItem } from "./NoteItem";
 import { ConfiramationDelete } from "./Delete";
+import { NoteColors } from "./NoteColors";
 const backgroundColorData = [
   { id: 1, color: "bg-red-500" },
   { id: 2, color: "bg-blue-500" },
@@ -80,7 +81,7 @@ export const Notes = () => {
   const [text, setText] = useState("");
   const [validationErrors, setValidationErrors] = useState({
     title: false,
-    text: false,
+    description: false,
     color: false,
   });
   const [isEditing, setIsEditing] = useState(false);
@@ -133,7 +134,7 @@ export const Notes = () => {
     setEditIndex(idx);
     const inputEditVal = submittedNotes[idx];
     setTitle(inputEditVal.title);
-    setText(inputEditVal.text);
+    setText(inputEditVal.description);
     setIsEditing(true);
     setActiveBgColor(editColor);
     // setActiveBgColor(
@@ -147,16 +148,20 @@ export const Notes = () => {
     e.preventDefault();
     const errors = {
       title: !title,
-      text: !text,
+      description: !description,
       color: activeBgColor === null,
     };
     setValidationErrors(errors);
-    if (errors.title || errors.text || errors.color) return;
+    if (errors.title || errors.description || errors.color) return;
 
     if (isEditing) {
       const editVal = submittedNotes.map((item, index) =>
         index === editIndex
-          ? { title, text, bgColor: backgroundColorData[activeBgColor].color }
+          ? {
+              title,
+              description,
+              bgColor: backgroundColorData[activeBgColor].color,
+            }
           : item
       );
       setSubmittedNotes(editVal);
@@ -164,7 +169,7 @@ export const Notes = () => {
     } else {
       const notes = {
         title: title,
-        text: text,
+        description: description,
         bgColor: backgroundColorData[activeBgColor].color,
       };
 
@@ -209,17 +214,13 @@ export const Notes = () => {
               }`}
             >
               {backgroundColorData.map((color, index) => (
-                <button
-                  onClick={() => {
-                    handleSetBgColor(index), setEditColor(index);
-                  }}
-                  key={index}
-                  type="button"
-                  className={`w-[30px] h-[30px] rounded-full border-sky-500 border ${color.color}`}
-                  style={{
-                    border: activeBgColor === index ? "2px solid #222" : "",
-                  }}
-                ></button>
+                <NoteColors
+                  index={index}
+                  color={color}
+                  setEditColor={setEditColor}
+                  handleSetBgColor={handleSetBgColor}
+                  activeBgColor={activeBgColor}
+                />
               ))}
             </div>
             <button
