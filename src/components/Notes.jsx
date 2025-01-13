@@ -74,11 +74,9 @@ const notes = [
   },
 ];
 
-console.log(notes);
-
 export const Notes = () => {
   const [title, setTitle] = useState("");
-  const [text, setText] = useState("");
+  const [description, setDescription] = useState("");
   const [validationErrors, setValidationErrors] = useState({
     title: false,
     description: false,
@@ -113,7 +111,7 @@ export const Notes = () => {
   };
 
   const handleTextChange = (e) => {
-    setText(e.target.value);
+    setDescription(e.target.value);
     setValidationErrors((prev) => ({ ...prev, text: false }));
   };
 
@@ -126,7 +124,7 @@ export const Notes = () => {
     setIsDelete(false);
     setIsEditing(false);
     setTitle("");
-    setText("");
+    setDescription("");
     setActiveBgColor(null);
   };
 
@@ -134,7 +132,7 @@ export const Notes = () => {
     setEditIndex(idx);
     const inputEditVal = submittedNotes[idx];
     setTitle(inputEditVal.title);
-    setText(inputEditVal.description);
+    setDescription(inputEditVal.description);
     setIsEditing(true);
     setActiveBgColor(editColor);
     // setActiveBgColor(
@@ -177,7 +175,7 @@ export const Notes = () => {
     }
 
     setTitle("");
-    setText("");
+    setDescription("");
     setActiveBgColor(null);
   };
 
@@ -200,9 +198,11 @@ export const Notes = () => {
           />
           <textarea
             onChange={handleTextChange}
-            value={text}
+            value={description}
             className={`border-b mb-3 p-4 outline-none ${
-              validationErrors.text ? "border-red-500" : "border-slate-300"
+              validationErrors.description
+                ? "border-red-500"
+                : "border-slate-300"
             }`}
             placeholder="Enter your note text."
           ></textarea>
@@ -215,6 +215,7 @@ export const Notes = () => {
             >
               {backgroundColorData.map((color, index) => (
                 <NoteColors
+                  key={index}
                   index={index}
                   color={color}
                   setEditColor={setEditColor}
