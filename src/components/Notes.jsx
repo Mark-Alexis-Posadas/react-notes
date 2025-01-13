@@ -9,6 +9,72 @@ const backgroundColorData = [
   { id: 4, color: "bg-orange-500" },
 ];
 
+const notes = [
+  {
+    title: "Grocery List",
+    description:
+      "Keep track of your grocery items and never forget a thing at the store.",
+    bgColor: "bg-red-500",
+  },
+
+  {
+    title: "Project Ideas",
+    description:
+      "Jot down all your project ideas, inspirations, and brainstorming sessions.",
+    bgColor: "bg-green-500",
+  },
+  {
+    title: "Meeting Notes",
+    description:
+      "Record important points, decisions, and action items from your meetings.",
+    bgColor: "bg-blue-500",
+  },
+  {
+    title: "Travel Plans",
+    description:
+      "Plan your next adventure with travel itineraries, packing lists, and must-visit spots.",
+    bgColor: "bg-green-500",
+  },
+  {
+    title: "Workout Routine",
+    description:
+      "Track your workout routines, sets, and progress for a healthier you.",
+    bgColor: "bg-orange-500",
+  },
+  {
+    title: "Book Reviews",
+    description:
+      "Write and store your thoughts on the books you've read and plan to read.",
+    bgColor: "bg-red-500",
+  },
+  {
+    title: "Recipe Collection",
+    description:
+      "Save your favorite recipes, including ingredients, instructions, and personal tweaks.",
+    bgColor: "bg-blue-500",
+  },
+  {
+    title: "Daily Journal",
+    description:
+      "Document your thoughts, experiences, and reflections each day.",
+    bgColor: "bg-orange-500",
+  },
+  {
+    title: "To-Do List",
+    description:
+      "Organize your tasks, set priorities, and check them off as you complete them.",
+    bgColor: "bg-green-500",
+  },
+  {
+    title: "Birthday Reminders",
+    description:
+      "Keep track of birthdays and special occasions to make sure you never miss an important date.",
+    bgColor: "bg-red-500",
+  },
+];
+
+console.log(notes);
+
 export const Notes = () => {
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
@@ -20,7 +86,7 @@ export const Notes = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [editIndex, setEditIndex] = useState(null);
   const [activeBgColor, setActiveBgColor] = useState(null);
-  const [submittedNotes, setSubmittedNotes] = useState([]);
+  const [submittedNotes, setSubmittedNotes] = useState(notes);
   const [isDelete, setIsDelete] = useState(false);
   const [editColor, setEditColor] = useState(null);
 
@@ -111,83 +177,90 @@ export const Notes = () => {
   };
 
   return (
-    <div className="p-20 flex flex-col items-center">
-      <h1 className="text-4xl font-bold mb-5">Notes App</h1>
-      <form
-        className="bg-slate-50 shadow-md p-5 w-[500px] flex flex-col"
-        onSubmit={handleFormSubmit}
-      >
-        <input
-          onChange={handleTitleChange}
-          value={title}
-          type="text"
-          className={`border-b mb-3 p-4 outline-none ${
-            validationErrors.title ? "border-red-500" : "border-slate-300"
-          }`}
-          placeholder="Enter your title"
-        />
-        <textarea
-          onChange={handleTextChange}
-          value={text}
-          className={`border-b mb-3 p-4 outline-none ${
-            validationErrors.text ? "border-red-500" : "border-slate-300"
-          }`}
-          placeholder="Enter your note text."
-        ></textarea>
-
-        <div className="flex items-center justify-between">
-          <div
-            className={`flex items-center gap-2 ${
-              validationErrors.color ? "border p-2 border-red-500" : ""
-            }`}
-          >
-            {backgroundColorData.map((color, index) => (
-              <button
-                onClick={() => {
-                  handleSetBgColor(index), setEditColor(index);
-                }}
-                key={index}
-                type="button"
-                className={`w-[30px] h-[30px] rounded-full border-sky-500 border ${color.color}`}
-                style={{
-                  border: activeBgColor === index ? "2px solid #222" : "",
-                }}
-              ></button>
-            ))}
-          </div>
-          <button type="submit" className="text-white p-2 rounded bg-green-400">
-            {isEditing ? "Update note" : "Add note"}
-          </button>
-        </div>
-      </form>
-
-      {submittedNotes.length === 0 ? null : (
-        <button
-          className="text-white bg-red-600 rounded p-2 mt-10"
-          onClick={handleToggleDelete}
+    <div className="min-h-screen flex p-10 gap-4">
+      <div>
+        <h1 className="text-4xl font-bold mb-5">Notes App</h1>
+        <form
+          className="bg-slate-50 shadow-md p-5 w-[500px] flex flex-col"
+          onSubmit={handleFormSubmit}
         >
-          {submittedNotes.length <= 1 ? "Delete note" : "Delete all notes"}
-        </button>
-      )}
-
-      <div className="flex items-center gap-3 mt-5">
-        {submittedNotes.map((note, index) => (
-          <NoteItem
-            idx={index}
-            key={index}
-            note={note}
-            noteBgColor={note.bgColor}
-            handleEdit={handleEdit}
+          <input
+            onChange={handleTitleChange}
+            value={title}
+            type="text"
+            className={`border-b mb-3 p-4 outline-none ${
+              validationErrors.title ? "border-red-500" : "border-slate-300"
+            }`}
+            placeholder="Enter your title"
           />
-        ))}
+          <textarea
+            onChange={handleTextChange}
+            value={text}
+            className={`border-b mb-3 p-4 outline-none ${
+              validationErrors.text ? "border-red-500" : "border-slate-300"
+            }`}
+            placeholder="Enter your note text."
+          ></textarea>
+
+          <div className="flex items-center justify-between">
+            <div
+              className={`flex items-center gap-2 ${
+                validationErrors.color ? "border p-2 border-red-500" : ""
+              }`}
+            >
+              {backgroundColorData.map((color, index) => (
+                <button
+                  onClick={() => {
+                    handleSetBgColor(index), setEditColor(index);
+                  }}
+                  key={index}
+                  type="button"
+                  className={`w-[30px] h-[30px] rounded-full border-sky-500 border ${color.color}`}
+                  style={{
+                    border: activeBgColor === index ? "2px solid #222" : "",
+                  }}
+                ></button>
+              ))}
+            </div>
+            <button
+              type="submit"
+              className="text-white p-2 rounded bg-green-400"
+            >
+              {isEditing ? "Update note" : "Add note"}
+            </button>
+          </div>
+        </form>
       </div>
-      {isDelete && (
-        <ConfiramationDelete
-          handleProceedDelete={handleProceedDelete}
-          submittedNotes={submittedNotes}
-          setIsDelete={setIsDelete}
-        />
-      )}
+      <div className="flex-1">
+        <div className="grid grid-cols-3 gap-3 mt-5">
+          {submittedNotes.map((note, index) => (
+            <NoteItem
+              idx={index}
+              key={index}
+              note={note}
+              noteBgColor={note.bgColor}
+              handleEdit={handleEdit}
+            />
+          ))}
+        </div>
+
+        {submittedNotes.length === 0 ? null : (
+          <button
+            className="text-white bg-red-600 rounded p-2 mt-10"
+            onClick={handleToggleDelete}
+          >
+            {submittedNotes.length <= 1 ? "Delete note" : "Delete all notes"}
+          </button>
+        )}
+
+        {isDelete && (
+          <ConfiramationDelete
+            handleProceedDelete={handleProceedDelete}
+            submittedNotes={submittedNotes}
+            setIsDelete={setIsDelete}
+          />
+        )}
+      </div>
     </div>
   );
 };
