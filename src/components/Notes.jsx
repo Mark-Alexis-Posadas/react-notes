@@ -90,6 +90,7 @@ export const Notes = () => {
   const [isSingleDelete, setIsSingleDelete] = useState(false);
   const [deleteIndex, setDeleteIndex] = useState(null);
   const [editColor, setEditColor] = useState(null);
+  const [noteTitle, setNoteTitle] = useState("");
 
   useEffect(() => {
     const storedNotes = JSON.parse(localStorage.getItem("submittedNotes"));
@@ -122,9 +123,13 @@ export const Notes = () => {
   };
 
   const handleSingleDelete = (index) => {
+    const title = [...submittedNotes];
+    const test = title[index].title;
+    setNoteTitle(test);
     setIsDelete(true);
     setIsSingleDelete(true);
     setDeleteIndex(index);
+    console.log(noteTitle);
   };
   const handleProceedDelete = () => {
     setIsDelete(false);
@@ -292,9 +297,11 @@ export const Notes = () => {
           {isDelete && (
             <ConfiramationDelete
               isSingleDelete={isSingleDelete}
+              setIsSingleDelete={setIsSingleDelete}
               handleProceedDelete={handleProceedDelete}
               submittedNotes={submittedNotes}
               setIsDelete={setIsDelete}
+              noteTitle={noteTitle}
             />
           )}
         </div>
