@@ -3,6 +3,7 @@ import { notes, backgroundColorData } from "../data"; // data
 import { NoteItem } from "./NoteItem";
 import { ConfiramationDelete } from "./Delete";
 import { NoteColors } from "./NoteColors";
+import { Navbar } from "./Navbar";
 
 export const Notes = () => {
   const [title, setTitle] = useState("");
@@ -128,114 +129,118 @@ export const Notes = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col md:flex-row p-5 md:p-10 gap-4 xl:max-w-[1920px] xl:m-auto">
-      <div>
-        <h1 className="text-4xl font-bold mb-5">Notes App</h1>
-        <form
-          className="bg-slate-50 shadow-md p-5 w-full md:w-[300px] lg:w-[500px] flex flex-col"
-          onSubmit={handleFormSubmit}
-        >
-          <input
-            onChange={handleTitleChange}
-            value={title}
-            type="text"
-            className={`border-b mb-3 p-4 outline-none ${
-              validationErrors.title ? "border-red-500" : "border-slate-300"
-            }`}
-            placeholder="Enter your title"
-          />
-          <textarea
-            onChange={handleTextChange}
-            value={description}
-            className={`border-b mb-3 p-4 outline-none ${
-              validationErrors.description
-                ? "border-red-500"
-                : "border-slate-300"
-            }`}
-            placeholder="Enter your note text."
-          ></textarea>
-
-          <div className="flex items-center justify-between">
-            <div
-              className={`flex items-center gap-2 ${
-                validationErrors.color ? "border p-2 border-red-500" : ""
+    <>
+      <Navbar />
+      <div className="min-h-screen flex flex-col md:flex-row p-5 md:p-10 gap-4 xl:max-w-[1920px] xl:m-auto">
+        <div>
+          <form
+            className="bg-slate-50 shadow-md p-5 w-full md:w-[300px] lg:w-[500px] flex flex-col"
+            onSubmit={handleFormSubmit}
+          >
+            <input
+              onChange={handleTitleChange}
+              value={title}
+              type="text"
+              className={`border-b mb-3 p-4 outline-none ${
+                validationErrors.title ? "border-red-500" : "border-slate-300"
               }`}
-            >
-              {backgroundColorData.map((color, index) => (
-                <NoteColors
+              placeholder="Enter your title"
+            />
+            <textarea
+              onChange={handleTextChange}
+              value={description}
+              className={`border-b mb-3 p-4 outline-none ${
+                validationErrors.description
+                  ? "border-red-500"
+                  : "border-slate-300"
+              }`}
+              placeholder="Enter your note text."
+            ></textarea>
+
+            <div className="flex items-center justify-between">
+              <div
+                className={`flex items-center gap-2 ${
+                  validationErrors.color ? "border p-2 border-red-500" : ""
+                }`}
+              >
+                {backgroundColorData.map((color, index) => (
+                  <NoteColors
+                    key={index}
+                    index={index}
+                    color={color}
+                    setEditColor={setEditColor}
+                    handleSetBgColor={handleSetBgColor}
+                    activeBgColor={activeBgColor}
+                  />
+                ))}
+              </div>
+              <div className="flex items-center gap-3">
+                {isEditing && (
+                  <button
+                    className="text-white rounded p-2 bg-gray-200"
+                    onClick={() => {
+                      setIsEditing(false);
+                      setTitle("");
+                      setDescription("");
+                      setActiveBgColor(null);
+                    }}
+                  >
+                    cancel
+                  </button>
+                )}
+
+                <button
+                  type="submit"
+                  className="text-white p-2 rounded bg-green-400"
+                >
+                  {isEditing ? "Update note" : "Add note"}
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+
+        {submittedNotes.length === 0 ? (
+          "Please Add Note"
+        ) : (
+          <div className="flex-1">
+            <div className="grid grid-cols-3 gap-3 mt-5">
+              {submittedNotes.map((note, index) => (
+                <NoteItem
+                  idx={index}
                   key={index}
-                  index={index}
-                  color={color}
-                  setEditColor={setEditColor}
-                  handleSetBgColor={handleSetBgColor}
-                  activeBgColor={activeBgColor}
+                  note={note}
+                  noteBgColor={note.bgColor}
+                  handleSingleDelete={handleSingleDelete}
+                  handleEdit={handleEdit}
                 />
               ))}
             </div>
-            <div className="flex items-center gap-3">
-              {isEditing && (
-                <button
-                  className="text-white rounded p-2 bg-gray-200"
-                  onClick={() => {
-                    setIsEditing(false);
-                    setTitle("");
-                    setDescription("");
-                    setActiveBgColor(null);
-                  }}
-                >
-                  cancel
-                </button>
-              )}
 
+            {submittedNotes.length === 0 ? null : (
               <button
-                type="submit"
-                className="text-white p-2 rounded bg-green-400"
+                className="text-white bg-red-600 rounded p-2 mt-10"
+                onClick={handleToggleDelete}
               >
-                {isEditing ? "Update note" : "Add note"}
+                {submittedNotes.length <= 1
+                  ? "Delete note"
+                  : "Delete all notes"}
               </button>
-            </div>
-          </div>
-        </form>
-      </div>
+            )}
 
-      {submittedNotes.length === 0 ? (
-        "Please Add Note"
-      ) : (
-        <div className="flex-1">
-          <div className="grid grid-cols-3 gap-3 mt-5">
-            {submittedNotes.map((note, index) => (
-              <NoteItem
-                idx={index}
-                key={index}
-                note={note}
-                noteBgColor={note.bgColor}
-                handleSingleDelete={handleSingleDelete}
-                handleEdit={handleEdit}
+            {isDelete && (
+              <ConfiramationDelete
+                isSingleDelete={isSingleDelete}
+                setIsSingleDelete={setIsSingleDelete}
+                handleProceedDelete={handleProceedDelete}
+                submittedNotes={submittedNotes}
+                setIsDelete={setIsDelete}
+                noteTitle={noteTitle}
               />
-            ))}
+            )}
           </div>
-
-          {submittedNotes.length === 0 ? null : (
-            <button
-              className="text-white bg-red-600 rounded p-2 mt-10"
-              onClick={handleToggleDelete}
-            >
-              {submittedNotes.length <= 1 ? "Delete note" : "Delete all notes"}
-            </button>
-          )}
-
-          {isDelete && (
-            <ConfiramationDelete
-              isSingleDelete={isSingleDelete}
-              setIsSingleDelete={setIsSingleDelete}
-              handleProceedDelete={handleProceedDelete}
-              submittedNotes={submittedNotes}
-              setIsDelete={setIsDelete}
-              noteTitle={noteTitle}
-            />
-          )}
-        </div>
-      )}
-    </div>
+        )}
+      </div>
+    </>
   );
 };
