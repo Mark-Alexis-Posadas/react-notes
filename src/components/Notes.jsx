@@ -153,6 +153,8 @@ export const Notes = () => {
     //     (color) => color.color === inputEditVal.bgColor
     //   )
     // );
+
+    console.log(editColor);
   };
 
   const handleFormSubmit = (e) => {
@@ -193,11 +195,11 @@ export const Notes = () => {
   };
 
   return (
-    <div className="min-h-screen flex p-10 gap-4">
+    <div className="min-h-screen flex flex-col md:flex-row p-5 md:p-10 gap-4">
       <div>
         <h1 className="text-4xl font-bold mb-5">Notes App</h1>
         <form
-          className="bg-slate-50 shadow-md p-5 w-[500px] flex flex-col"
+          className="bg-slate-50 shadow-md p-5 w-full md:w-[500px] flex flex-col"
           onSubmit={handleFormSubmit}
         >
           <input
