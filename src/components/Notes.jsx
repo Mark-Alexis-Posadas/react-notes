@@ -148,13 +148,11 @@ export const Notes = () => {
     setDescription(inputEditVal.description);
     setIsEditing(true);
     setActiveBgColor(editColor);
-    // setActiveBgColor(
-    //   backgroundColorData.findIndex(
-    //     (color) => color.color === inputEditVal.bgColor
-    //   )
-    // );
-
-    console.log(editColor);
+    setActiveBgColor(
+      backgroundColorData.findIndex(
+        (color) => color.color === inputEditVal.bgColor
+      )
+    );
   };
 
   const handleFormSubmit = (e) => {
@@ -195,11 +193,11 @@ export const Notes = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col md:flex-row p-5 md:p-10 gap-4">
+    <div className="min-h-screen flex flex-col md:flex-row p-5 md:p-10 gap-4 xl:max-w-[1920px] xl:m-auto">
       <div>
         <h1 className="text-4xl font-bold mb-5">Notes App</h1>
         <form
-          className="bg-slate-50 shadow-md p-5 w-full md:w-[500px] flex flex-col"
+          className="bg-slate-50 shadow-md p-5 w-full md:w-[300px] lg:w-[500px] flex flex-col"
           onSubmit={handleFormSubmit}
         >
           <input
@@ -247,6 +245,7 @@ export const Notes = () => {
                     setIsEditing(false);
                     setTitle("");
                     setDescription("");
+                    setActiveBgColor(null);
                   }}
                 >
                   cancel
