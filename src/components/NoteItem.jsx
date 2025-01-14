@@ -1,7 +1,13 @@
 import { faPencilAlt, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-export const NoteItem = ({ idx, handleEdit, note, noteBgColor }) => {
+export const NoteItem = ({
+  idx,
+  handleSingleDelete,
+  handleEdit,
+  note,
+  noteBgColor,
+}) => {
   return (
     <div className={`${noteBgColor} p-2 rounded flex flex-col justify-between`}>
       <h1 className="font-bold mb-2 text-white text-md">{note.title}</h1>
@@ -13,7 +19,10 @@ export const NoteItem = ({ idx, handleEdit, note, noteBgColor }) => {
         >
           <FontAwesomeIcon icon={faPencilAlt} />
         </button>
-        <button className="w-[30px] h-[30px] rounded-full bg-white flex items-center justify-center">
+        <button
+          className="w-[30px] h-[30px] rounded-full bg-white flex items-center justify-center"
+          onClick={() => handleSingleDelete(idx)}
+        >
           <FontAwesomeIcon icon={faTrash} />
         </button>
       </div>

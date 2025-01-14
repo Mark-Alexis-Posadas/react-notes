@@ -87,6 +87,8 @@ export const Notes = () => {
   const [activeBgColor, setActiveBgColor] = useState(null);
   const [submittedNotes, setSubmittedNotes] = useState(notes);
   const [isDelete, setIsDelete] = useState(false);
+  const [isSingleDelete, setIsSingleDelete] = useState(false);
+  const [deleteIndex, setDeleteIndex] = useState(null);
   const [editColor, setEditColor] = useState(null);
 
   useEffect(() => {
@@ -119,13 +121,24 @@ export const Notes = () => {
     setIsDelete(true);
   };
 
+  const handleSingleDelete = (index) => {
+    setIsDelete(true);
+    setIsSingleDelete(true);
+    setDeleteIndex(index);
+  };
   const handleProceedDelete = () => {
-    setSubmittedNotes([]);
     setIsDelete(false);
-    setIsEditing(false);
-    setTitle("");
-    setDescription("");
-    setActiveBgColor(null);
+    if (isSingleDelete) {
+      const deleteNote = submittedNotes.filter((_, idx) => idx !== deleteIndex);
+      setSubmittedNotes(deleteNote);
+      setIsSingleDelete(false);
+    } else {
+      setSubmittedNotes([]);
+      setIsEditing(false);
+      setTitle("");
+      setDescription("");
+      setActiveBgColor(null);
+    }
   };
 
   const handleEdit = (idx) => {
@@ -224,45 +237,67 @@ export const Notes = () => {
                 />
               ))}
             </div>
-            <button
-              type="submit"
-              className="text-white p-2 rounded bg-green-400"
-            >
-              {isEditing ? "Update note" : "Add note"}
-            </button>
+            <div className="flex items-center gap-3">
+              {isEditing && (
+                <button
+                  className="text-white rounded p-2 bg-gray-200"
+                  onClick={() => {
+                    setIsEditing(false);
+                    setTitle("");
+                    setDescription("");
+                  }}
+                >
+                  cancel
+                </button>
+              )}
+
+              <button
+                type="submit"
+                className="text-white p-2 rounded bg-green-400"
+              >
+                {isEditing ? "Update note" : "Add note"}
+              </button>
+            </div>
           </div>
         </form>
       </div>
-      <div className="flex-1">
-        <div className="grid grid-cols-3 gap-3 mt-5">
-          {submittedNotes.map((note, index) => (
-            <NoteItem
-              idx={index}
-              key={index}
-              note={note}
-              noteBgColor={note.bgColor}
-              handleEdit={handleEdit}
+
+      {submittedNotes.length === 0 ? (
+        "Please Add Note"
+      ) : (
+        <div className="flex-1">
+          <div className="grid grid-cols-3 gap-3 mt-5">
+            {submittedNotes.map((note, index) => (
+              <NoteItem
+                idx={index}
+                key={index}
+                note={note}
+                noteBgColor={note.bgColor}
+                handleSingleDelete={handleSingleDelete}
+                handleEdit={handleEdit}
+              />
+            ))}
+          </div>
+
+          {submittedNotes.length === 0 ? null : (
+            <button
+              className="text-white bg-red-600 rounded p-2 mt-10"
+              onClick={handleToggleDelete}
+            >
+              {submittedNotes.length <= 1 ? "Delete note" : "Delete all notes"}
+            </button>
+          )}
+
+          {isDelete && (
+            <ConfiramationDelete
+              isSingleDelete={isSingleDelete}
+              handleProceedDelete={handleProceedDelete}
+              submittedNotes={submittedNotes}
+              setIsDelete={setIsDelete}
             />
-          ))}
+          )}
         </div>
-
-        {submittedNotes.length === 0 ? null : (
-          <button
-            className="text-white bg-red-600 rounded p-2 mt-10"
-            onClick={handleToggleDelete}
-          >
-            {submittedNotes.length <= 1 ? "Delete note" : "Delete all notes"}
-          </button>
-        )}
-
-        {isDelete && (
-          <ConfiramationDelete
-            handleProceedDelete={handleProceedDelete}
-            submittedNotes={submittedNotes}
-            setIsDelete={setIsDelete}
-          />
-        )}
-      </div>
+      )}
     </div>
   );
 };
