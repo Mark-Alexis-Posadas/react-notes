@@ -1,11 +1,9 @@
 import { useEffect, useState } from "react";
-import { notes, backgroundColorData } from "../data"; // data
+import { backgroundColorData } from "../data"; // data
 import { NoteItem } from "./NoteItem";
 import { ConfiramationDelete } from "./Delete";
 import { NoteColors } from "./NoteColors";
-import { Navbar } from "./Navbar";
-
-export const Notes = () => {
+export const Notes = ({ submittedNotes, setSubmittedNotes }) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [validationErrors, setValidationErrors] = useState({
@@ -16,7 +14,7 @@ export const Notes = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [editIndex, setEditIndex] = useState(null);
   const [activeBgColor, setActiveBgColor] = useState(null);
-  const [submittedNotes, setSubmittedNotes] = useState(notes);
+
   const [isDelete, setIsDelete] = useState(false);
   const [isSingleDelete, setIsSingleDelete] = useState(false);
   const [deleteIndex, setDeleteIndex] = useState(null);
@@ -130,7 +128,6 @@ export const Notes = () => {
 
   return (
     <>
-      <Navbar />
       <div className="min-h-screen flex flex-col md:flex-row p-5 md:p-10 gap-4 xl:max-w-[1920px] xl:m-auto">
         <div>
           <form
