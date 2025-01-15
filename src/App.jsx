@@ -5,7 +5,6 @@ import { notes } from "./data";
 
 const App = () => {
   const [submittedNotes, setSubmittedNotes] = useState(notes);
-
   return (
     <>
       <Navbar notes={notes} setSubmittedNotes={setSubmittedNotes} />
