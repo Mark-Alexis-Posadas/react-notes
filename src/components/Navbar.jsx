@@ -20,7 +20,7 @@ export const Navbar = ({ notes, setSubmittedNotes }) => {
   };
 
   return (
-    <nav className="flex items-center justify-between py-4 px-5 border-b border-slate-50 shadow-sm">
+    <nav className="flex items-center justify-between py-4 px-10 border-b border-slate-50 shadow-sm">
       <h1 className="text-4xl font-bold">Notes App</h1>
 
       <div>

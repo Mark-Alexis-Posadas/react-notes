@@ -1,4 +1,5 @@
-import React from "react";
+import { faExclamationCircle } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export const ConfiramationDelete = ({
   isSingleDelete,
@@ -10,6 +11,10 @@ export const ConfiramationDelete = ({
   return (
     <div className="flex items-center justify-center fixed w-full top-0 left-0 min-h-screen bg-[rgba(0,0,0,0.4)]">
       <div className="bg-white rounded p-5 w-[600px] text-center">
+        <FontAwesomeIcon
+          icon={faExclamationCircle}
+          className="text-red-600 text-8xl mb-5"
+        />
         <p>
           {`Are you sure you want to delete ${
             isSingleDelete ? noteTitle : "All these notes"
