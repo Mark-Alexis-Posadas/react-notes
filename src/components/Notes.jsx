@@ -154,7 +154,11 @@ export const Notes = ({ submittedNotes, setSubmittedNotes }) => {
               placeholder="Enter your note text."
             ></textarea>
 
-            <div className="flex items-center justify-between">
+            <div
+              className={`flex items-center justify-between flex-wrap ${
+                isEditing && "gap-3"
+              }`}
+            >
               <div
                 className={`flex items-center gap-2 ${
                   validationErrors.color ? "border p-2 border-red-500" : ""
