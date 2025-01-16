@@ -160,7 +160,7 @@ export const Notes = ({ submittedNotes, setSubmittedNotes }) => {
               }`}
             >
               <div
-                className={`flex items-center gap-2 ${
+                className={`flex items-center gap-2 flex-wrap mb-5 md:flex-row lg:mb-0 ${
                   validationErrors.color ? "border p-2 border-red-500" : ""
                 }`}
               >
@@ -205,7 +205,7 @@ export const Notes = ({ submittedNotes, setSubmittedNotes }) => {
           "Please Add Note"
         ) : (
           <div className="flex-1">
-            <div className="grid grid-cols-3 gap-3 mt-5">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 mt-5: md:mt-0">
               {submittedNotes.map((note, index) => (
                 <NoteItem
                   idx={index}
