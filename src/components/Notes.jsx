@@ -23,12 +23,6 @@ export const Notes = ({ submittedNotes, setSubmittedNotes }) => {
   const [noteTitle, setNoteTitle] = useState("");
 
   useEffect(() => {
-    if (isEditing && width <= 768) {
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
-  }, [isEditing, width]);
-
-  useEffect(() => {
     const storedNotes = JSON.parse(localStorage.getItem("submittedNotes"));
     if (storedNotes) {
       setSubmittedNotes(storedNotes);
@@ -83,6 +77,10 @@ export const Notes = ({ submittedNotes, setSubmittedNotes }) => {
   };
 
   const handleEdit = (idx) => {
+    if (width <= 768) {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
     setEditIndex(idx);
     const inputEditVal = submittedNotes[idx];
     setTitle(inputEditVal.title);
