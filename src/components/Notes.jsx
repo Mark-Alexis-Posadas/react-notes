@@ -4,6 +4,7 @@ import { NoteItem } from "./NoteItem";
 import { ConfiramationDelete } from "./Delete";
 import { NoteColors } from "./NoteColors";
 export const Notes = ({ submittedNotes, setSubmittedNotes }) => {
+  const [width, setWidth] = useState(window.innerWidth);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [validationErrors, setValidationErrors] = useState({
@@ -20,6 +21,12 @@ export const Notes = ({ submittedNotes, setSubmittedNotes }) => {
   const [deleteIndex, setDeleteIndex] = useState(null);
   const [editColor, setEditColor] = useState(null);
   const [noteTitle, setNoteTitle] = useState("");
+
+  useEffect(() => {
+    if (isEditing && width <= 768) {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  }, [isEditing, width]);
 
   useEffect(() => {
     const storedNotes = JSON.parse(localStorage.getItem("submittedNotes"));
