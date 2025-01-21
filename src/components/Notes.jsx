@@ -3,6 +3,7 @@ import { backgroundColorData } from "../data"; // data
 import { NoteItem } from "./NoteItem";
 import { ConfiramationDelete } from "./Delete";
 import { NoteColors } from "./NoteColors";
+
 export const Notes = ({ submittedNotes, setSubmittedNotes }) => {
   const [width, setWidth] = useState(window.innerWidth);
   const [title, setTitle] = useState("");
@@ -21,17 +22,6 @@ export const Notes = ({ submittedNotes, setSubmittedNotes }) => {
   const [deleteIndex, setDeleteIndex] = useState(null);
   const [editColor, setEditColor] = useState(null);
   const [noteTitle, setNoteTitle] = useState("");
-
-  useEffect(() => {
-    const storedNotes = JSON.parse(localStorage.getItem("submittedNotes"));
-    if (storedNotes) {
-      setSubmittedNotes(storedNotes);
-    }
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem("submittedNotes", JSON.stringify(submittedNotes));
-  }, [submittedNotes]);
 
   const handleSetBgColor = (index) => {
     setActiveBgColor(index);

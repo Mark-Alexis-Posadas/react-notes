@@ -1,7 +1,6 @@
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
-import { NoteColors } from "./NoteColors";
 
 export const Navbar = ({ notes, setSubmittedNotes }) => {
   const [searchTerm, setSearchTerm] = useState("");
