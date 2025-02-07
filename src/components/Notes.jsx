@@ -16,6 +16,7 @@ export const Notes = ({ submittedNotes, setSubmittedNotes }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editIndex, setEditIndex] = useState(null);
   const [activeBgColor, setActiveBgColor] = useState(null);
+  const [fieldsBgColor, setFieldsBgColor] = useState(null);
 
   const [isDelete, setIsDelete] = useState(false);
   const [isSingleDelete, setIsSingleDelete] = useState(false);
@@ -24,8 +25,10 @@ export const Notes = ({ submittedNotes, setSubmittedNotes }) => {
   const [noteTitle, setNoteTitle] = useState("");
 
   const handleSetBgColor = (index) => {
+    const selectedColor = backgroundColorData[index].color;
     setActiveBgColor(index);
     setValidationErrors((prev) => ({ ...prev, color: false }));
+    setFieldsBgColor(selectedColor); // Set the selected color to background color
   };
 
   const handleTitleChange = (e) => {
@@ -92,6 +95,7 @@ export const Notes = ({ submittedNotes, setSubmittedNotes }) => {
       color: activeBgColor === null,
     };
     setValidationErrors(errors);
+    setFieldsBgColor(null);
     if (errors.title || errors.description || errors.color) return;
 
     if (isEditing) {
@@ -133,7 +137,7 @@ export const Notes = ({ submittedNotes, setSubmittedNotes }) => {
               onChange={handleTitleChange}
               value={title}
               type="text"
-              className={`border-b mb-3 p-4 outline-none ${
+              className={`${fieldsBgColor} border-b mb-3 p-4 outline-none ${
                 validationErrors.title ? "border-red-500" : "border-slate-300"
               }`}
               placeholder="Enter your title"
@@ -141,7 +145,7 @@ export const Notes = ({ submittedNotes, setSubmittedNotes }) => {
             <textarea
               onChange={handleTextChange}
               value={description}
-              className={`border-b mb-3 p-4 outline-none ${
+              className={`${fieldsBgColor} border-b mb-3 p-4 outline-none ${
                 validationErrors.description
                   ? "border-red-500"
                   : "border-slate-300"
@@ -213,7 +217,7 @@ export const Notes = ({ submittedNotes, setSubmittedNotes }) => {
               ))}
             </div>
 
-            {submittedNotes.length === 0 ? null : (
+            {submittedNotes.length <= 1 ? null : (
               <button
                 className="text-white bg-red-600 rounded p-2 mt-10"
                 onClick={handleToggleDelete}
