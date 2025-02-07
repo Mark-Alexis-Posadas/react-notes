@@ -28,7 +28,7 @@ export const Notes = ({ submittedNotes, setSubmittedNotes }) => {
     const selectedColor = backgroundColorData[index].color;
     setActiveBgColor(index);
     setValidationErrors((prev) => ({ ...prev, color: false }));
-    setFieldsBgColor(selectedColor); // Set the selected color to background color
+    setFieldsBgColor(selectedColor);
   };
 
   const handleTitleChange = (e) => {
@@ -74,12 +74,16 @@ export const Notes = ({ submittedNotes, setSubmittedNotes }) => {
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
 
+    const notesCopy = [...submittedNotes];
+    const selectedNoteBgColor = notesCopy[idx].bgColor;
+    setFieldsBgColor(selectedNoteBgColor);
+
     setEditIndex(idx);
     const inputEditVal = submittedNotes[idx];
     setTitle(inputEditVal.title);
     setDescription(inputEditVal.description);
     setIsEditing(true);
-    setActiveBgColor(editColor);
+
     setActiveBgColor(
       backgroundColorData.findIndex(
         (color) => color.color === inputEditVal.bgColor
