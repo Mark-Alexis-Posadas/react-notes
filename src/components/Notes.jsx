@@ -141,7 +141,9 @@ export const Notes = ({ submittedNotes, setSubmittedNotes }) => {
               onChange={handleTitleChange}
               value={title}
               type="text"
-              className={`${fieldsBgColor} border-b mb-3 p-4 outline-none ${
+              className={`${fieldsBgColor} ${
+                isEditing ? "text-white" : "text-gray-500"
+              } border-b mb-3 p-4 outline-none ${
                 validationErrors.title ? "border-red-500" : "border-slate-300"
               }`}
               placeholder="Enter your title"
@@ -149,7 +151,9 @@ export const Notes = ({ submittedNotes, setSubmittedNotes }) => {
             <textarea
               onChange={handleTextChange}
               value={description}
-              className={`${fieldsBgColor} border-b mb-3 p-4 outline-none ${
+              className={`${fieldsBgColor} ${
+                isEditing ? "text-white" : "text-gray-500"
+              } border-b mb-3 p-4 outline-none ${
                 validationErrors.description
                   ? "border-red-500"
                   : "border-slate-300"
@@ -187,6 +191,7 @@ export const Notes = ({ submittedNotes, setSubmittedNotes }) => {
                       setTitle("");
                       setDescription("");
                       setActiveBgColor(null);
+                      setFieldsBgColor(null);
                     }}
                   >
                     cancel

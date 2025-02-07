@@ -27,7 +27,6 @@ const App = () => {
       />
     </>
   );
-  NoteColors;
 };
 
 export default App;
