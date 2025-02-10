@@ -3,11 +3,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
 
 export const Navbar = ({ notes, setSubmittedNotes }) => {
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchItem, setSearchItem] = useState("");
 
   const handleSearchNote = (e) => {
-    setSearchTerm(e.target.value);
-    if (e.target.value === "") {
+    const searchTerm = e.target.value;
+    setSearchItem(searchTerm);
+    if (searchTerm === "") {
       setSubmittedNotes(notes);
     } else {
       const noteResult = notes.filter((note) =>
@@ -27,7 +28,7 @@ export const Navbar = ({ notes, setSubmittedNotes }) => {
           type="text"
           placeholder="search note"
           className="border-b-2 p-2 outline-none border-slate-50"
-          value={searchTerm}
+          value={searchItem}
           onChange={handleSearchNote}
         />
         <FontAwesomeIcon icon={faSearch} />
