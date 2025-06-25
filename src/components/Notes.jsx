@@ -60,6 +60,10 @@ export const Notes = ({ submittedNotes, setSubmittedNotes }) => {
       const deleteNote = submittedNotes.filter((_, idx) => idx !== deleteIndex);
       setSubmittedNotes(deleteNote);
       setIsSingleDelete(false);
+      setIsEditing(false);
+      setTitle("");
+      setDescription("");
+      setActiveBgColor(null);
     } else {
       setSubmittedNotes([]);
       setIsEditing(false);
